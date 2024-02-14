@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "891826974497",
+    "project_id": "sagenotes-flutter-project",
+    "storage_bucket": "sagenotes-flutter-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:891826974497:android:f01b3d886178762c8d5860",
+        "android_client_info": {
+          "package_name": "com.myorg.mynotes"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpKH4MFTpBlHo2FOB7IR_9datq_0gZQsQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
