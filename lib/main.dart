@@ -45,7 +45,7 @@ class HomePage extends StatelessWidget {
 
               return const Center(child: Text('Done'));
             default:
-              return const Center(child: Text('Loading...'));
+              return const Center(child: Text('Loading....'));
           }
         },
       ),
