@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'dart:developer' as devtools show log;
 
 import 'package:mynotes/constants/routes.dart';
+import 'package:mynotes/utilities/show_error_dialog.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -12,6 +12,7 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
+  final GlobalKey<_LoginViewState> loginStateKey = GlobalKey();
   late final TextEditingController _email;
   late final TextEditingController _password;
 
@@ -58,22 +59,54 @@ class _LoginViewState extends State<LoginView> {
             onPressed: () async {
               final email = _email.text;
               final password = _password.text;
-              try {
-                await FirebaseAuth.instance
-                    .signInWithEmailAndPassword(
-                      email: email,
-                      password: password,
-                    )
-                    .then((value) =>
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                          notesRoute,
-                          (route) => false,
-                        ));
-              } on FirebaseAuthException catch (e) {
-                if (e.code == 'invalid-credential') {
-                  devtools.log('Invalid credentials entered!');
-                }
-              }
+              // try {
+              await FirebaseAuth.instance
+                  .signInWithEmailAndPassword(
+                    email: email,
+                    password: password,
+                  )
+                  .then(
+                      (value) => Navigator.of(context).pushNamedAndRemoveUntil(
+                            notesRoute,
+                            (route) => false,
+                          ))
+                  .catchError(
+                (error) async {
+                  final FirebaseAuthException e = error;
+                  if (e.code == 'invalid-credential') {
+                    await showErrorDialog(
+                      context,
+                      'Invalid credentials entered!',
+                    );
+                  } else {
+                    if (error is FirebaseAuthException) {
+                      await showErrorDialog(
+                        context,
+                        'Error: ${e.code}',
+                      );
+                    } else {
+                      await showErrorDialog(
+                        context,
+                        error.toString(),
+                      );
+                    }
+                  }
+                  return 0;
+                },
+              );
+              // }
+              // on FirebaseAuthException catch (e) {
+              //   if (e.code == 'invalid-credential') {
+              //     if (context.mounted) {
+              //       await showErrorDialog(
+              //         context,
+              //         'Invalid credentials entered!',
+              //       );
+              //     } else {
+              //       return;
+              //     }
+              //   }
+              // }
             },
             child: const Text('Login'),
           ),
