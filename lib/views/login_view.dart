@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'dart:developer' as devtools show log;
 import 'package:mynotes/constants/routes.dart';
 import 'package:mynotes/utilities/show_error_dialog.dart';
 
@@ -77,6 +77,11 @@ class _LoginViewState extends State<LoginView> {
                         context,
                         'Invalid credentials entered!',
                       );
+                    } else if (e.code == 'invalid-email') {
+                      await showErrorDialog(
+                        context,
+                        'Enter a valid email address.',
+                      );
                     } else {
                       await showErrorDialog(
                         context,
@@ -84,6 +89,7 @@ class _LoginViewState extends State<LoginView> {
                       );
                     }
                   } else {
+                    devtools.log(error.toString(), error: error.runtimeType);
                     await showErrorDialog(
                       context,
                       error.toString(),

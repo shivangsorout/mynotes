@@ -14,18 +14,18 @@ void main() {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        // colorScheme: ColorScheme.fromSeed(
-        //   seedColor: const Color(0xff0c87ff),
-        // ),
-        // useMaterial3: true,
         appBarTheme: const AppBarTheme(
-          color: Colors.blue,
-        ),
+            color: Colors.blue,
+            titleTextStyle: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+            )),
       ),
       routes: {
         loginRoute: (context) => const LoginView(),
         registerRoute: (context) => const RegisterView(),
         notesRoute: (context) => const NotesView(),
+        verifyEmailRoute: (context) => const VerifyEmailView(),
       },
       home: const HomePage(),
     ),
