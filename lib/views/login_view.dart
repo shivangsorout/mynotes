@@ -1,7 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'dart:developer' as devtools show log;
 import 'package:mynotes/constants/routes.dart';
+import 'package:mynotes/services/auth/auth_exceptions.dart';
+import 'package:mynotes/services/auth/auth_service.dart';
 import 'package:mynotes/utilities/show_error_dialog.dart';
 
 class LoginView extends StatefulWidget {
@@ -58,57 +58,43 @@ class _LoginViewState extends State<LoginView> {
             onPressed: () async {
               final email = _email.text;
               final password = _password.text;
-              await FirebaseAuth.instance
-                  .signInWithEmailAndPassword(
-                email: email,
-                password: password,
-              )
-                  .then(
-                (value) {
-                  final user = FirebaseAuth.instance.currentUser;
-                  if (user?.emailVerified ?? false) {
-                    // send user to the main UI
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                      notesRoute,
-                      (route) => false,
-                    );
-                  } else {
-                    //send user to the verify email view
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                      verifyEmailRoute,
-                      (route) => false,
-                    );
-                  }
-                },
-              ).catchError(
-                (error) async {
-                  if (error is FirebaseAuthException) {
-                    final FirebaseAuthException e = error;
-                    if (e.code == 'invalid-credential') {
-                      await showErrorDialog(
-                        context,
-                        'Invalid credentials entered!',
-                      );
-                    } else if (e.code == 'invalid-email') {
-                      await showErrorDialog(
-                        context,
-                        'Enter a valid email address.',
-                      );
-                    } else {
-                      await showErrorDialog(
-                        context,
-                        'Error: ${e.code}',
-                      );
-                    }
-                  } else {
-                    devtools.log(error.toString(), error: error.runtimeType);
-                    await showErrorDialog(
-                      context,
-                      error.toString(),
-                    );
-                  }
-                },
-              );
+              try {
+                await AuthService.firebase().logIn(
+                  email: email,
+                  password: password,
+                );
+
+                if (!mounted) return;
+                final user = AuthService.firebase().currentUser;
+                if (user?.isEmailVerified ?? false) {
+                  // send user to the main UI
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                    notesRoute,
+                    (route) => false,
+                  );
+                } else {
+                  // send user to the verify email view
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                    verifyEmailRoute,
+                    (route) => false,
+                  );
+                }
+              } on InvalidCredentialAuthException {
+                await showErrorDialog(
+                  context,
+                  'Invalid credentials entered!',
+                );
+              } on InvalidEmailAuthException {
+                await showErrorDialog(
+                  context,
+                  'Enter a valid email address.',
+                );
+              } on GenericAuthException {
+                await showErrorDialog(
+                  context,
+                  'Authentication Error',
+                );
+              }
             },
             child: const Text('Login'),
           ),
