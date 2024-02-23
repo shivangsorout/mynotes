@@ -64,7 +64,7 @@ class _LoginViewState extends State<LoginView> {
                   password: password,
                 );
 
-                if (!mounted) return;
+                if (!context.mounted) return;
                 final user = AuthService.firebase().currentUser;
                 if (user?.isEmailVerified ?? false) {
                   // send user to the main UI
