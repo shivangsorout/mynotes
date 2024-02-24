@@ -15,14 +15,15 @@ void main() {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         appBarTheme: const AppBarTheme(
-            color: Colors.blue,
-            titleTextStyle: TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-            ),
-            actionsIconTheme: IconThemeData(
-              color: Colors.white,
-            )),
+          iconTheme: IconThemeData(
+            color: Colors.white,
+          ),
+          color: Colors.blue,
+          titleTextStyle: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+          ),
+        ),
       ),
       routes: {
         loginRoute: (context) => const LoginView(),
