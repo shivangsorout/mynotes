@@ -20,7 +20,6 @@ class _NotesViewState extends State<NotesView> {
   void initState() {
     _notesService = NotesService();
     _notesService.open();
-    _notesService.deleteAllNotes();
     super.initState();
   }
 
