@@ -63,11 +63,11 @@ class _CreateOrUpdateNoteViewState extends State<CreateOrUpdateNoteView> {
     if (note == null) {
       return;
     }
-    final text = _textController.text;
-    await _notesService.updateNote(
-      documentId: note.documentId,
-      text: text,
-    );
+    // final text = _textController.text;
+    // await _notesService.updateNote(
+    //   documentId: note.documentId,
+    //   text: text,
+    // );
   }
 
   void _setupTextControllerListner() {
