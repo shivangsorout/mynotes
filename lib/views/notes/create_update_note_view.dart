@@ -115,7 +115,7 @@ class _CreateOrUpdateNoteViewState extends State<CreateOrUpdateNoteView> {
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
-              _setupTextControllerListner();
+              // _setupTextControllerListner();
               return TextField(
                 controller: _textController,
                 maxLines: null,
