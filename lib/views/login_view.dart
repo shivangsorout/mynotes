@@ -62,64 +62,66 @@ class _LoginViewState extends State<LoginView> {
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                  'Enter your email and password to login and interact with or create notes!'),
-              TextField(
-                controller: _email,
-                enableSuggestions: false,
-                autocorrect: false,
-                decoration: const InputDecoration(
-                  hintText: 'Enter your email here',
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                    'Enter your email and password to login and interact with or create notes!'),
+                TextField(
+                  controller: _email,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  decoration: const InputDecoration(
+                    hintText: 'Enter your email here',
+                  ),
                 ),
-              ),
-              TextField(
-                controller: _password,
-                obscureText: true,
-                enableSuggestions: false,
-                autocorrect: false,
-                decoration: const InputDecoration(
-                  hintText: 'Enter your password here',
+                TextField(
+                  controller: _password,
+                  obscureText: true,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  decoration: const InputDecoration(
+                    hintText: 'Enter your password here',
+                  ),
                 ),
-              ),
-              Center(
-                child: Column(
-                  children: [
-                    TextButton(
-                      onPressed: () async {
-                        final email = _email.text;
-                        final password = _password.text;
-                        context.read<AuthBloc>().add(
-                              AuthEventLogIn(
-                                email,
-                                password,
-                              ),
-                            );
-                      },
-                      child: const Text('Login'),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        context
-                            .read<AuthBloc>()
-                            .add(const AuthEventForgotPassword());
-                      },
-                      child: const Text('Forgot your password?'),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        context
-                            .read<AuthBloc>()
-                            .add(const AuthEventShouldRegister());
-                      },
-                      child: const Text('Not Registered Yet? Register here!'),
-                    ),
-                  ],
+                Center(
+                  child: Column(
+                    children: [
+                      TextButton(
+                        onPressed: () async {
+                          final email = _email.text;
+                          final password = _password.text;
+                          context.read<AuthBloc>().add(
+                                AuthEventLogIn(
+                                  email,
+                                  password,
+                                ),
+                              );
+                        },
+                        child: const Text('Login'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          context
+                              .read<AuthBloc>()
+                              .add(const AuthEventForgotPassword());
+                        },
+                        child: const Text('Forgot your password?'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          context
+                              .read<AuthBloc>()
+                              .add(const AuthEventShouldRegister());
+                        },
+                        child: const Text('Not Registered Yet? Register here!'),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
