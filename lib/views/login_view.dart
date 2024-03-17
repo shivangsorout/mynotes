@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mynotes/extensions/buildcontext/loc.dart';
 import 'package:mynotes/services/auth/auth_exceptions.dart';
 import 'package:mynotes/services/auth/bloc/auth_bloc.dart';
 import 'package:mynotes/services/auth/bloc/auth_event.dart';
@@ -39,26 +40,26 @@ class _LoginViewState extends State<LoginView> {
           if (state.exception is InvalidCredentialAuthException) {
             await showErrorDialog(
               context,
-              'Invalid credentials entered!',
+              context.loc.login_error_wrong_credentials,
             );
           } else if (state.exception is InvalidEmailAuthException) {
             if (!context.mounted) return;
             await showErrorDialog(
               context,
-              'Enter a valid email address.',
+              context.loc.register_error_invalid_email,
             );
           } else if (state.exception is GenericAuthException) {
             if (!context.mounted) return;
             await showErrorDialog(
               context,
-              'Authentication Error',
+              context.loc.login_error_auth_error,
             );
           }
         }
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Login'),
+          title: Text(context.loc.login),
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -66,14 +67,13 @@ class _LoginViewState extends State<LoginView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                    'Enter your email and password to login and interact with or create notes!'),
+                Text(context.loc.login_view_prompt),
                 TextField(
                   controller: _email,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: const InputDecoration(
-                    hintText: 'Enter your email here',
+                  decoration: InputDecoration(
+                    hintText: context.loc.email_text_field_placeholder,
                   ),
                 ),
                 TextField(
@@ -81,8 +81,8 @@ class _LoginViewState extends State<LoginView> {
                   obscureText: true,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: const InputDecoration(
-                    hintText: 'Enter your password here',
+                  decoration: InputDecoration(
+                    hintText: context.loc.password_text_field_placeholder,
                   ),
                 ),
                 Center(
@@ -99,7 +99,7 @@ class _LoginViewState extends State<LoginView> {
                                 ),
                               );
                         },
-                        child: const Text('Login'),
+                        child: Text(context.loc.login),
                       ),
                       TextButton(
                         onPressed: () {
@@ -107,7 +107,7 @@ class _LoginViewState extends State<LoginView> {
                               .read<AuthBloc>()
                               .add(const AuthEventForgotPassword());
                         },
-                        child: const Text('Forgot your password?'),
+                        child: Text(context.loc.login_view_forgot_password),
                       ),
                       TextButton(
                         onPressed: () {
@@ -115,7 +115,7 @@ class _LoginViewState extends State<LoginView> {
                               .read<AuthBloc>()
                               .add(const AuthEventShouldRegister());
                         },
-                        child: const Text('Not Registered Yet? Register here!'),
+                        child: Text(context.loc.login_view_not_registered_yet),
                       ),
                     ],
                   ),
