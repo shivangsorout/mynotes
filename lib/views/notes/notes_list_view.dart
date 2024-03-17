@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mynotes/extensions/buildcontext/loc.dart';
 import 'package:mynotes/services/cloud/cloud_note.dart';
 import 'package:mynotes/utilities/dialogs/delete_dialog.dart';
 
@@ -19,7 +20,7 @@ class NotesListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return notes.isEmpty
-        ? const Text('Waiting for the notes....')
+        ? Text(context.loc.waiting_for_notes)
         : ListView.builder(
             itemCount: notes.length,
             itemBuilder: (context, index) {
