@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- For devices below Android 12 -->
-    <style name="SplashTheme" parent="@android:style/Theme.Light.NoTitleBar">
-        <item name="android:windowBackground">@mipmap/splash</item>
-    </style>
 
-    <!-- For devices Android 12 or higher -->
-    <style name="SplashTheme_S" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@mipmap/splash</item>
-    </style>
+    <style name="SplashScreen" parent="@android:style/Theme.Light.NoTitleBar">
+		<item name="android:windowBackground">@mipmap/splash</item>
+	</style>
 
     <!-- Theme applied to the Android Window as soon as the process has started.
          This theme determines the color of the Android Window while your
